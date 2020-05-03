@@ -2,14 +2,20 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "phpstan/phpstan": "^0.12.19",
+        "phpstan/phpstan-strict-rules": "^0.12.2",
+        "phpstan/phpstan-symfony": "^0.12.6",
+        "sensio/framework-extra-bundle": "^5.5",
+        "slevomat/coding-standard": "^6.3",
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "5.0.*",
-        "symfony/yaml": "5.0.*"
+        "symfony/yaml": "5.0.*",
+        "ext-json": "*"
     },
     "require-dev": {
     },
@@ -48,7 +54,15 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "phpstan": [
+            "@php bin/console cache:warmup --env=dev",
+            "phpstan analyse -l max -c phpstan.neon src"
+        ],
+        "check-coding-style": [
+            "phpcs --standard=phpcs_ruleset.xml --extensions=php --colors -n src/"
+        ],
+        "ccs": ["@check-coding-style"]
     },
     "conflict": {
         "symfony/symfony": "*"

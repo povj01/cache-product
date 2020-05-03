@@ -12,6 +12,10 @@ use Symfony\Component\Routing\RouteCollectionBuilder;
 use function dirname;
 use const PHP_VERSION_ID;
 
+/**
+ * Class Kernel
+ * @package App
+ */
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;

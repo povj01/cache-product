@@ -1,14 +1,27 @@
 parameters:
+    cacheDir: '%env(CACHE_PATH)%'
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
 
-    App\:
-        resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+    App\Service\:
+        resource: '../src/Service/*'
+
+    App\Service\ProductService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+            $cacheDir: '%cacheDir%'
+
+    App\Repository\ElasticSearch\:
+        resource: '../src/Repository/ElasticSearch/*'
+
+    App\Repository\MySQL\:
+        resource: '../src/Repository/MySQL/*'
 
     App\Controller\:
-        resource: '../src/Controller'
+        resource: '../src/Controller/*'
         tags: ['controller.service_arguments']
+
+    App\Repository\IProductRepository: '@App\Repository\MySQL\ProductRepositoryMS'
